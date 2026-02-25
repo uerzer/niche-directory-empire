@@ -83,7 +83,7 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 
-# ── Load configs ─────────────────────────────────────────────
+# ── Load configs ─────────────────────────────────────────────────────────────
 with open("config/niche.json") as f:
     NICHE = json.load(f)
 with open("config/affiliates.json") as f:
@@ -101,7 +101,7 @@ def render(template_name, output_path, **context):
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
 
-# ── Prepare listing dicts ─────────────────────────────────────────
+# ── Prepare listing dicts ─────────────────────────────────────────────────────
 listings = []
 for _, row in df.iterrows():
     images = []
@@ -146,7 +146,7 @@ def _parse_list(val):
 # Sort: featured first, then by rating desc
 listings.sort(key=lambda x: (not x["is_featured"], -(float(x["rating"] or 0))))
 
-# ── 1. Generate listing pages ─────────────────────────────────────
+# ── 1. Generate listing pages ─────────────────────────────────────────────────
 print(f"Generating {len(listings)} listing pages...")
 for listing in listings:
     # JSON-LD structured data for SEO
@@ -177,7 +177,7 @@ for listing in listings:
            listing=listing,
            json_ld=json.dumps(json_ld, indent=2))
 
-# ── 2. Category pages ─────────────────────────────────────────
+# ── 2. Category pages ─────────────────────────────────────────────────────────
 categories = {}
 for l in listings:
     for svc in l.get("services", [])[:2]:
@@ -193,7 +193,7 @@ for cat_slug, cat_listings in categories.items():
            category_slug=cat_slug,
            listings=cat_listings[:50])
 
-# ── 3. Location pages (state + city) ─────────────────────────────────
+# ── 3. Location pages (state + city) ─────────────────────────────────────────
 by_state = {}
 for l in listings:
     if l["state"]:
@@ -217,7 +217,7 @@ for state, cities in by_state.items():
                location_name=f"{city}, {state}", location_type="city",
                listings=city_listings, cities=[])
 
-# ── 4. Homepage ───────────────────────────────────────────────
+# ── 4. Homepage ───────────────────────────────────────────────────────────────
 featured = [l for l in listings if l["is_featured"]][:12]
 recent = listings[:24]
 states = sorted(by_state.keys())
@@ -226,7 +226,7 @@ render("index.html", "dist/index.html",
        total_count=len(listings), states=states,
        categories=list(categories.keys())[:12])
 
-# ── 5. Sitemap ────────────────────────────────────────────────
+# ── 5. Sitemap ────────────────────────────────────────────────────────────────
 urls = [f"https://{NICHE['domain']}/"]
 for l in listings:
     urls.append(f"https://{NICHE['domain']}/listings/{l['slug']}/")
@@ -246,7 +246,7 @@ sitemap_xml += "</urlset>"
 with open("dist/sitemap.xml", "w") as f:
     f.write(sitemap_xml)
 
-# ── 6. robots.txt ─────────────────────────────────────────────
+# ── 6. robots.txt ─────────────────────────────────────────────────────────────
 with open("dist/robots.txt", "w") as f:
     f.write(f"User-agent: *\nAllow: /\nSitemap: https://{NICHE['domain']}/sitemap.xml\n")
 
