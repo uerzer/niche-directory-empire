@@ -47,7 +47,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
 
     print(f"Starting with {len(df)} records")
 
-    # ── 1. Remove permanently closed businesses ────────────────────────────
+    # ── 1. Remove permanently closed businesses ────────────────────────────────
     if "business_status" in df.columns:
         before = len(df)
         df = df[df["business_status"].isin(["OPERATIONAL", None, float("nan")])]
@@ -70,7 +70,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
     report["removed"]["missing_essentials"] = removed
     print(f"  Removed {removed} missing essential fields")
 
-    # ── 3. Deduplicate ─────────────────────────────────────────────────
+    # ── 3. Deduplicate ─────────────────────────────────────────────────────
     before = len(df)
     if "place_id" in df.columns:
         df = df.drop_duplicates(subset=["place_id"], keep="first")
@@ -90,7 +90,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
     report["removed"]["duplicates"] = removed
     print(f"  Removed {removed} duplicates")
 
-    # ── 4. Normalize phone numbers ───────────────────────────────────────
+    # ── 4. Normalize phone numbers ───────────────────────────────────────────
     def normalize_phone(p):
         if pd.isna(p):
             return None
@@ -105,7 +105,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
     if phone_col:
         df[phone_col] = df[phone_col].apply(normalize_phone)
 
-    # ── 5. Clean and validate website URLs ──────────────────────────────────
+    # ── 5. Clean and validate website URLs ────────────────────────────────────
     url_col = next((c for c in ["site", "website", "url"] if c in df.columns), None)
     if url_col:
         def clean_url(u):
@@ -130,7 +130,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
 
         df[url_col] = df[url_col].apply(clean_url)
 
-    # ── 6. Normalize state to abbreviation ──────────────────────────────────
+    # ── 6. Normalize state to abbreviation ────────────────────────────────────
     STATE_MAP = {
         "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
         "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
@@ -152,7 +152,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
             lambda s: STATE_MAP.get(str(s).strip(), str(s).strip().upper()[:2]) if pd.notna(s) else None
         )
 
-    # ── 7. Strip HTML and special characters from name ────────────────────────
+    # ── 7. Strip HTML and special characters from name ────────────────────────────
     def clean_name(n):
         if pd.isna(n):
             return None
@@ -164,7 +164,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
     df["name"] = df["name"].apply(clean_name)
     df = df[df["name"].str.len() > 2]  # Remove single-char or empty names
 
-    # ── 8. Add quality score ─────────────────────────────────────────────
+    # ── 8. Add quality score ─────────────────────────────────────────────────
     def quality_score(row):
         score = 0
         if pd.notna(row.get(phone_col)): score += 2
@@ -177,7 +177,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
     df["quality_score"] = df.apply(quality_score, axis=1)
     df["is_featured_candidate"] = df["quality_score"] >= 7
 
-    # ── 9. Generate URL slug ─────────────────────────────────────────────
+    # ── 9. Generate URL slug ─────────────────────────────────────────────────
     def make_slug(*parts):
         combined = "-".join(str(p) for p in parts if pd.notna(p) and str(p).strip())
         slug = combined.lower()
@@ -200,7 +200,7 @@ def clean_listings(input_path: str = "data/raw_listings.csv",
         mask = df["slug"] == slug
         df.loc[mask, "slug"] = [f"{slug}-{i+1}" for i in range(mask.sum())]
 
-    # ── 10. Save ─────────────────────────────────────────────────────
+    # ── 10. Save ─────────────────────────────────────────────────────────
     os.makedirs("data", exist_ok=True)
     df.to_csv(output_path, index=False)
 
