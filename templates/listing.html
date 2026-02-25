@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ listing.name }} | {{ listing.city }}, {{ listing.state }} | {{ niche.site_name }}{% endblock %}
+{% block description %}{{ listing.description[:155] if listing.description else listing.name + ' — ' + niche.niche + ' in ' + listing.city }}{% endblock %}
+{% block canonical %}/listings/{{ listing.slug }}/{% endblock %}
+{% block json_ld %}<script type="application/ld+json">{{ json_ld }}</script>{% endblock %}
+{% block content %}
+<div class="container" style="padding:40px 0 60px">
+  <p style="color:#6b7280;margin-bottom:16px"><a href="/" style="color:#6b7280">Home</a> › <a href="/location/{{ listing.state|lower }}/" style="color:#6b7280">{{ listing.state }}</a> › {{ listing.name }}</p>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:32px">
+    <div>
+      <div style="margin-bottom:8px">
+        {% if listing.is_featured %}<span class="badge badge-featured">Featured</span>{% endif %}
+        <span class="badge badge-verified">Verified</span>
+      </div>
+      <h1 style="font-size:2rem;margin-bottom:8px">{{ listing.name }}</h1>
+      {% if listing.rating %}<div style="color:#f59e0b;margin-bottom:16px">★ {{ listing.rating }} <span style="color:#6b7280">({{ listing.reviews }} reviews)</span></div>{% endif %}
+      {% if listing.images %}
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px">
+        {% for img in listing.images[:6] %}<img src="/{{ img }}" alt="{{ listing.name }}" style="width:100%;height:160px;object-fit:cover;border-radius:8px">{% endfor %}
+      </div>
+      {% endif %}
+      {% if listing.description %}<p style="font-size:1.05rem;color:#374151;margin-bottom:20px">{{ listing.description }}</p>{% endif %}
+      {% if listing.services %}
+      <h2 style="margin-bottom:12px">Services</h2>
+      <ul style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin-bottom:20px">
+        {% for s in listing.services %}<li style="background:#f3f4f6;padding:6px 14px;border-radius:20px;font-size:.9rem">{{ s }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+      {% if listing.service_areas %}
+      <h2 style="margin-bottom:8px">Service Areas</h2>
+      <p style="color:#6b7280;margin-bottom:20px">{{ listing.service_areas|join(', ') }}</p>
+      {% endif %}
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:20px">
+        <h3 style="margin-bottom:16px">Contact</h3>
+        {% if listing.phone %}<p style="margin-bottom:8px">📞 <a href="tel:{{ listing.phone }}">{{ listing.phone }}</a></p>{% endif %}
+        {% if listing.address %}<p style="margin-bottom:8px">📍 {{ listing.address }}{% if listing.city %}, {{ listing.city }}, {{ listing.state }}{% endif %}</p>{% endif %}
+        {% if listing.website %}<p><a href="{{ listing.website }}" target="_blank" rel="noopener">🌐 Visit Website</a></p>{% endif %}
+      </div>
+      <div class="cta-box">
+        <h3>Get a Free Quote</h3>
+        <a href="{{ affiliates.listing_cta.url_template }}" class="cta-btn" target="_blank" rel="noopener sponsored">{{ affiliates.listing_cta.text }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
