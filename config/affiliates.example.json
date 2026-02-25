@@ -1,0 +1,31 @@
+{
+  "global_cta": {
+    "text": "Get Free Quotes",
+    "url": "https://bark.com/find/your-category/?ref=YOUR_REF",
+    "type": "lead_gen"
+  },
+  "listing_cta": {
+    "text": "Request a Free Quote",
+    "url_template": "https://bark.com/find/your-category/?ref=YOUR_REF",
+    "type": "lead_gen"
+  },
+  "sidebar_cta": {
+    "text": "Compare Prices Free",
+    "url": "https://bark.com/find/your-category/?ref=YOUR_REF",
+    "type": "comparison"
+  },
+  "programs": [
+    {
+      "name": "Bark.com",
+      "url": "https://bark.com/affiliates",
+      "payout": "$50-100/lead",
+      "type": "lead_gen"
+    },
+    {
+      "name": "PartnerStack",
+      "url": "https://partnerstack.com",
+      "payout": "20-50% recurring",
+      "type": "saas_affiliate"
+    }
+  ]
+}
