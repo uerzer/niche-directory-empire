@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ niche.niche|title }} in {{ location_name }} | {{ niche.site_name }}{% endblock %}
+{% block description %}Find verified {{ niche.niche }} companies in {{ location_name }}. {{ listings|length }} providers listed.{% endblock %}
+{% block canonical %}/location/{{ location_name|lower|replace(', ','/') }}/{% endblock %}
+{% block content %}
+<div class="hero" style="padding:40px 0">
+  <div class="container">
+    <h1>{{ niche.niche|title }} in {{ location_name }}</h1>
+    <p>{{ listings|length }} verified companies{% if location_type == 'state' %} — browse by city below{% endif %}</p>
+  </div>
+</div>
+<div class="container" style="padding:40px 0">
+  {% if cities %}
+  <h2 style="margin-bottom:16px">Browse by City</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px">
+    {% for city in cities %}<a href="{{ city|lower|replace(' ','-') }}/" style="background:white;border:1px solid #e5e7eb;padding:6px 14px;border-radius:20px;text-decoration:none;color:#374151;font-size:.9rem">{{ city }}</a>{% endfor %}
+  </div>
+  {% endif %}
+  <div class="cta-box"><h3>{{ affiliates.global_cta.text }}</h3><a href="{{ affiliates.global_cta.url }}" class="cta-btn" target="_blank" rel="noopener sponsored">Get Free Quotes →</a></div>
+  <div class="grid">
+    {% for l in listings %}
+    <div class="card">
+      <h3 style="margin-bottom:4px"><a href="/listings/{{ l.slug }}/">{{ l.name }}</a></h3>
+      {% if l.rating %}<div style="color:#f59e0b;font-size:.9rem">★ {{ l.rating }}</div>{% endif %}
+      <p style="color:#6b7280;font-size:.9rem;margin-bottom:8px">{{ l.city }}, {{ l.state }}</p>
+      {% if l.phone %}<p style="font-size:.9rem">📞 {{ l.phone }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
