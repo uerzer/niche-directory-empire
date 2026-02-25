@@ -1,0 +1,25 @@
+{
+  "site_name": "MySiteDirectory",
+  "domain": "mysitedirectory.com",
+  "tagline": "Find the Best [Niche] Near You",
+  "description": "The most complete directory of [niche] in the United States.",
+  "niche": "your niche here",
+  "niche_singular": "your niche singular",
+  "location_type": "local",
+  "primary_color": "#1a56db",
+  "accent_color": "#f59e0b",
+  "google_analytics_id": "G-XXXXXXXXXX",
+  "google_adsense_id": "ca-pub-XXXXXXXXXXXXXXXX",
+  "outscraper_queries": [
+    "your niche query usa",
+    "your niche variant query usa"
+  ],
+  "niche_enrichment_fields": {
+    "field_1": "description of field 1",
+    "field_2": "description of field 2"
+  },
+  "blog_keywords": [
+    "how to choose the best [niche]",
+    "top [niche] near me guide"
+  ]
+}
