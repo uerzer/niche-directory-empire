@@ -1,13 +1,1 @@
-name: Deploy
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Deploy
-        run: echo "Deploy step here"
+bmFtZTogRGVwbG95CgpvbjoKICBwdXNoOgogICAgYnJhbmNoZXM6IFttYWluXQoKam9iczoKICBkZXBsb3k6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gbmFtZTogRGVwbG95CiAgICAgICAgcnVuOiBlY2hvICJEZXBsb3kgc3RlcCBoZXJlIgo=
