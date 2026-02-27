@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ niche.site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ niche.tagline }}{% endblock %}">
+  <link rel="canonical" href="{{ niche.base_url }}{% block canonical %}/{% endblock %}">
+  {% block json_ld %}{% endblock %}
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #111827; background: #f9fafb; line-height: 1.6; }
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    .nav { background: #1e293b; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-brand { color: #fff; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-links a { color: #94a3b8; font-size: 0.9rem; }
+    .nav-links a:hover { color: #fff; text-decoration: none; }
+
+    /* Container */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #fff; padding: 60px 24px; text-align: center; }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
+    .hero p { font-size: 1.15rem; color: #94a3b8; max-width: 560px; margin: 0 auto 28px; }
+    .search-bar { display: flex; max-width: 540px; margin: 0 auto; }
+    .search-bar input { flex: 1; padding: 14px 18px; font-size: 1rem; border: none; border-radius: 8px 0 0 8px; outline: none; }
+    .search-bar button { padding: 14px 22px; background: #2563eb; color: #fff; border: none; border-radius: 0 8px 8px 0; font-size: 1rem; cursor: pointer; }
+    .search-bar button:hover { background: #1d4ed8; }
+
+    /* Cards */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin: 32px 0; }
+    .card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.08); overflow: hidden; transition: box-shadow .2s; }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+    .card-img { width: 100%; height: 180px; object-fit: cover; background: #e5e7eb; }
+    .card-body { padding: 18px; }
+    .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; color: #111827; }
+    .card-meta { font-size: 0.85rem; color: #6b7280; margin-bottom: 8px; }
+    .card-desc { font-size: 0.9rem; color: #374151; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-footer { padding: 12px 18px; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
+    .card-rating { color: #f59e0b; font-size: 0.85rem; font-weight: 600; }
+    .card-link { font-size: 0.85rem; font-weight: 600; color: #2563eb; }
+
+    /* Badges */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 6px; }
+    .badge-featured { background: #fef3c7; color: #92400e; }
+    .badge-verified { background: #d1fae5; color: #065f46; }
+
+    /* Section headings */
+    .section-title { font-size: 1.4rem; font-weight: 700; margin: 32px 0 16px; color: #1e293b; }
+    .section-subtitle { color: #6b7280; margin-top: -12px; margin-bottom: 20px; font-size: 0.95rem; }
+
+    /* State/category pill grid */
+    .pill-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 32px; }
+    .pill { background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 6px 16px; font-size: 0.9rem; color: #374151; transition: background .15s; }
+    .pill:hover { background: #2563eb; color: #fff; border-color: #2563eb; text-decoration: none; }
+
+    /* CTA Banner */
+    .cta-banner { background: #2563eb; color: #fff; padding: 40px 24px; text-align: center; margin: 40px 0; border-radius: 12px; }
+    .cta-banner h2 { font-size: 1.6rem; margin-bottom: 8px; }
+    .cta-banner p { color: #bfdbfe; margin-bottom: 20px; }
+    .btn { display: inline-block; padding: 12px 28px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .btn-white { background: #fff; color: #2563eb; }
+    .btn-white:hover { background: #f0f7ff; text-decoration: none; }
+    .btn-primary { background: #2563eb; color: #fff; border: none; }
+    .btn-primary:hover { background: #1d4ed8; text-decoration: none; }
+
+    /* Footer */
+    .footer { background: #1e293b; color: #94a3b8; padding: 40px 24px; margin-top: 60px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+    .footer-brand { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .footer-desc { font-size: 0.9rem; line-height: 1.7; }
+    .footer h4 { color: #fff; font-size: 0.9rem; margin-bottom: 12px; }
+    .footer ul { list-style: none; }
+    .footer ul li { margin-bottom: 8px; }
+    .footer ul li a { color: #94a3b8; font-size: 0.88rem; }
+    .footer ul li a:hover { color: #fff; }
+    .footer-bottom { max-width: 1100px; margin: 24px auto 0; padding-top: 20px; border-top: 1px solid #334155; font-size: 0.82rem; display: flex; justify-content: space-between; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.7rem; }
+      .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-brand" href="/">{{ niche.site_name }}</a>
+  <div class="nav-links">
+    <a href="/categories/">Browse by Service</a>
+    <a href="/location/">Browse by Location</a>
+    {% if affiliates and affiliates|length > 0 %}<a href="{{ affiliates[0].url }}" target="_blank">{{ affiliates[0].label }}</a>{% endif %}
+  </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">{{ niche.site_name }}</div>
+      <p class="footer-desc">{{ niche.tagline }}. Find verified local businesses near you.</p>
+    </div>
+    <div>
+      <h4>Browse</h4>
+      <ul>
+        <li><a href="/categories/">All Categories</a></li>
+        <li><a href="/location/">All Locations</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; {{ year }} {{ niche.site_name }}. All rights reserved.</span>
+    <span>Built with &hearts; for local businesses</span>
+  </div>
+</footer>
+
+<script>
+  // Simple search
+  const searchInput = document.querySelector('.search-bar input');
+  const searchBtn = document.querySelector('.search-bar button');
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener('click', () => {
+      const q = searchInput.value.trim();
+      if (q) window.location.href = '/search/?q=' + encodeURIComponent(q);
+    });
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') searchBtn.click();
+    });
+  }
+</script>
+</body>
+</html>
