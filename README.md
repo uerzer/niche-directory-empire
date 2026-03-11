@@ -8,10 +8,10 @@ A complete, agent-portable system to build, populate, and monetize niche directo
 - Launches pre-populated with real verified data
 - Costs under $250 to build
 - Takes 4 days from idea to live site
-- Generates $500–$2,500/month per site at maturity (month 6–12)
+- Generates $500-$2,500/month per site at maturity (month 6-12)
 - Runs on free hosting (Cloudflare Pages)
 
-**Proven case:** Frey Chu built a Luxury Restroom Trailer directory in 4 days → $273/day ($8,190/month)
+**Proven case:** Frey Chu built a Luxury Restroom Trailer directory in 4 days -> $273/day ($8,190/month)
 
 ---
 
@@ -55,7 +55,7 @@ niche-directory-empire/
 │       └── deploy.yml
 ├── requirements.txt
 ├── .env.example
-└── run.py                   # Single entry point — runs full pipeline
+└── run.py                   # Single entry point - runs full pipeline
 ```
 
 ---
@@ -78,7 +78,7 @@ niche-directory-empire/
 
 ```bash
 # 1. Clone
-git clone https://github.com/YOUR_USERNAME/niche-directory-empire
+git clone https://github.com/uerzer/niche-directory-empire
 cd niche-directory-empire
 
 # 2. Install dependencies
@@ -105,10 +105,10 @@ bash scripts/07_deploy.sh your-directory-name
 
 | Niche | Score | Primary Revenue | Data Source |
 |-------|-------|-----------------|-------------|
-| Luxury restroom trailers | 22/25 | Lead gen $50–150/lead | Outscraper |
-| Dementia care facilities | 23/25 | Referral $500–2000 | CMS.gov free |
+| Luxury restroom trailers | 22/25 | Lead gen $50-150/lead | Outscraper |
+| Dementia care facilities | 23/25 | Referral $500-2000 | CMS.gov free |
 | Mental health therapists | 21/25 | Bark.com $100/lead | NPI Registry |
-| AI tools by use case | 19/25 | PartnerStack 20–50% recurring | ProductHunt API |
+| AI tools by use case | 19/25 | PartnerStack 20-50% recurring | ProductHunt API |
 | Ketamine clinics | 22/25 | Lead gen high-ticket | Outscraper |
 | Immigration lawyers | 20/25 | Bark.com $100/lead | Outscraper |
 
@@ -117,7 +117,7 @@ bash scripts/07_deploy.sh your-directory-name
 ## Stack (Zero Recurring Cost)
 
 - **Scraping:** Outscraper (~$3/1k records) + Crawl4AI (free/open source)
-- **AI:** Claude API (~$5–15/directory build)
+- **AI:** Claude API (~$5-15/directory build)
 - **Hosting:** Cloudflare Pages (free)
 - **Database:** Supabase free tier (optional)
 - **Build:** Python + Jinja2 (free)
@@ -129,10 +129,10 @@ bash scripts/07_deploy.sh your-directory-name
 
 ## Revenue Timeline
 
-- Month 1–3: $0 (Google indexing period)
-- Month 3–6: $100–500/month
-- Month 6–12: $500–2,500/month
-- Portfolio of 10 sites: $5k–25k/month
+- Month 1-3: $0 (Google indexing period)
+- Month 3-6: $100-500/month
+- Month 6-12: $500-2,500/month
+- Portfolio of 10 sites: $5k-25k/month
 
 ---
 
