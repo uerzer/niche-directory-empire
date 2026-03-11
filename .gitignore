@@ -1,2 +1,12 @@
 node_modules/
 .env
+dist/
+data/
+*.csv
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.crawl4ai/
+.DS_Store
+Thumbs.db
